@@ -19,7 +19,7 @@ type SocketService struct {
 	laddr        string
 	status       int
 	listener     net.Listener
-	stopCh       chan error
+	stopChan       chan error
 }
 
 // NewSocketService create a new socket service
@@ -33,7 +33,7 @@ func NewSocketService(laddr string) (*SocketService, error) {
 
 	s := &SocketService{
 		sessions:   &sync.Map{},
-		stopCh:     make(chan error),
+		stopChan:     make(chan error),
 		hbInterval: 0 * time.Second,
 		hbTimeout:  0 * time.Second,
 		laddr:      laddr,
@@ -76,7 +76,7 @@ func (s *SocketService) Serv() {
 	for {
 		select {
 
-		case <-s.stopCh:
+		case <-s.stopChan:
 			return
 		}
 	}
@@ -84,13 +84,13 @@ func (s *SocketService) Serv() {
 
 func (s *SocketService) acceptHandler(ctx context.Context) {
 	for {
-		c, err := s.listener.Accept()
+		conn, err := s.listener.Accept()
 		if err != nil {
-			s.stopCh <- err
+			s.stopChan <- err
 			return
 		}
 
-		go s.connectHandler(ctx, c)
+		go s.connectHandler(ctx, conn)
 	}
 }
 
@@ -138,7 +138,7 @@ func (s *SocketService) GetStatus() int {
 
 // Stop stop socket service with reason
 func (s *SocketService) Stop(reason string) {
-	s.stopCh <- errors.New(reason)
+	s.stopChan <- errors.New(reason)
 }
 
 // SetHeartBeat set heart beat

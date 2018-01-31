@@ -12,7 +12,7 @@ type Message struct {
 	msgSize  int32
 	msgID    int32
 	data     []byte
-	checksum uint32
+	//checksum uint32
 }
 
 // NewMessage create a new message
@@ -23,7 +23,7 @@ func NewMessage(msgID int32, data []byte) *Message {
 		data:    data,
 	}
 
-	msg.checksum = msg.calcChecksum()
+	//msg.checksum = msg.calcChecksum()
 	return msg
 }
 
@@ -38,9 +38,9 @@ func (msg *Message) GetID() int32 {
 }
 
 // Verify verify checksum
-func (msg *Message) Verify() bool {
-	return msg.checksum == msg.calcChecksum()
-}
+//func (msg *Message) Verify() bool {
+//	return msg.checksum == msg.calcChecksum()
+//}
 
 func (msg *Message) calcChecksum() uint32 {
 	if msg == nil {
@@ -63,5 +63,5 @@ func (msg *Message) calcChecksum() uint32 {
 }
 
 func (msg *Message) String() string {
-	return fmt.Sprintf("Size=%d ID=%d DataLen=%d Checksum=%d", msg.msgSize, msg.GetID(), len(msg.GetData()), msg.checksum)
+	return fmt.Sprintf("Size=%d ID=%d DataLen=%d Checksum=%d", msg.msgSize, msg.GetID(), len(msg.GetData()), msg.msgID)
 }

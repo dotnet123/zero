@@ -22,10 +22,10 @@ func Encode(msg *Message) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	err = binary.Write(buffer, binary.LittleEndian, msg.checksum)
-	if err != nil {
-		return nil, err
-	}
+	//err = binary.Write(buffer, binary.LittleEndian, msg.checksum)
+	//if err != nil {
+	//	return nil, err
+	//}
 
 	return buffer.Bytes(), nil
 }

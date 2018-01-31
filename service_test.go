@@ -5,9 +5,18 @@ import (
 	"net"
 	"testing"
 	"time"
+	"github.com/labstack/gommon/log"
+
 )
 
 func TestService(t *testing.T) {
+
+	//log.SetOutput(os.Stderr)
+	//	log.Print("stderr")
+	//	log.SetOutput(os.Stdout)
+	//	log.Print(" stdout")
+	//log.Info("566778")
+
 	host := "127.0.0.1:18787"
 
 	ss, err := NewSocketService(host)
